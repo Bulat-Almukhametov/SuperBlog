@@ -93,7 +93,7 @@ namespace Superblog.UnitTests
             var result = target.CreateCategory(category, categoryRepositoryMock.Object);
 
             //Assert
-            categoryRepositoryMock.Verify(m => m.SaveCategory(category), Times.Never);//our category is saved
+            categoryRepositoryMock.Verify(m => m.SaveCategory(category), Times.Never);//our category isn't saved
             moderationProcessorMock.Verify(m => m.ProcessModeration(category.ToString(), mUrl), Times.Never);//didn't report to moderator (e.g. e-mail isn't sended)
             Assert.AreEqual(result, (int)CategoryCreateReturns.AlreadyExist);//system report that operation failed
         }

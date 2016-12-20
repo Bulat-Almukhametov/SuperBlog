@@ -32,29 +32,9 @@ namespace SuperBlog.Domain.Concrete
             return (int) PostCreateReturns.Success;
         }
 
-        class CategoryComparer : IEqualityComparer<Category>
-        {
-            public bool Equals(Category b1, Category b2)
-            {
-                if (b2 == null && b1 == null)
-                    return true;
-                else if (b1 == null | b2 == null)
-                    return false;
-                else if (b1.Name.Equals(b2.Name))
-                    return true;
-                else
-                    return false;
-            }
-
-            public int GetHashCode(Category obj)
-            {
-                return obj.Name.GetHashCode();
-            }
-        }
-
         public int CreateCategory(Category category, ICategoryRepository categoryRepository)
         {
-            if (categoryRepository.Categories.Contains(category, new CategoryComparer()))
+            if (categoryRepository.Categories.Any(cat=>cat.Name == category.Name))
                 return (int)CategoryCreateReturns.AlreadyExist;
 
             category.State = (int) CategoryStates.OnModeration;
